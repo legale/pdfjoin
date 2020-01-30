@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+#pdfjoin v. 1.0
+#pdfjoin is a bash script to join pdf files using gs command
+#LICENSE MIT
+
+# this construction to concat all args except last one
+if [ $# == 0  ]; then
+echo "Usage: ./pdfjoin <PDF-sourcefile-1>..<PDF-sourcefile-n> <PDF-destfile>"
+exit 1
+fi
+
+END="$(($# - 1))"
+for ((i=1;i<=END;i++)); do
+	STR+="${!i} "
+done
+OUT=${!#}
+
+gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$OUT $STR
+echo gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$OUT $STR
